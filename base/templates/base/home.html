@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}
+  Home
+{% endblock title %}
+{% block content %}
+  <div class="d-flex flex-column gap-4">
+    {% for product in products %}
+      <div class="p-5 pb-4 bg-body-secondary rounded-3 shadow-sm border">
+        <h2 class="text-center">
+          {{ product.name }}
+          <span class="badge bg-danger fs-5">{{ product.price|intcomma }}$</span>
+        </h2>
+        <p class="text-center">
+          {{ product.description|truncatewords:80|linebreaksbr }}
+        </p>
+        <div class="d-flex gap-2 justify-content-end flex-wrap mt-5">
+          <a class="btn btn-primary" href="{{ product.get_absolute_url }}">Check</a>
+          <a class="btn btn-danger" href="{{ product.get_buy_url }}">Buy</a>
+          {% if admin %}
+            <a class="btn btn-success" href="{{ product.get_edit_url }}">Edit</a>
+            <a class="btn btn-warning" href="{{ product.get_delete_url }}">Delete</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}
